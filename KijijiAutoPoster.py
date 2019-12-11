@@ -1,6 +1,10 @@
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 
 driver_path = '/Users/sohrab/env/bin/geckodriver'
@@ -41,31 +45,68 @@ def send_to_element(driver, xpath: str, string: str) -> None:
     """
     Finds an HTML element with <xpath> and inputs <string> to it.
     """
-    driver.find_element_by_xpath(xpath).send_keys(string)
+    #driver.find_element_by_xpath(xpath).send_keys(string)
+    try:
+        element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, xpath)))
+        element.send_keys(string)
+    except NoSuchElementException:
+        print('Can Not Find element with XPATH: ' + xpath)
+
+
 
 def click_element(driver, xpath: str) -> None:
     """
     Find an HTML element with <xpath> and clicks it.
     """
-    driver.find_element_by_xpath(xpath).click()
+    #driver.find_element_by_xpath(xpath).click()
+    try:
+        element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, xpath)))
+        element.click()
+    except NoSuchElementException:
+        print('Can Not Find element with XPATH: ' + xpath)
 
 def enter_element(driver, xpath: str) -> None:
     """
     Find an HTML element with <xpath> and inputs an enter key.
     """
-    driver.find_element_by_xpath(xpath).send_keys(Keys.ENTER)
+    #driver.find_element_by_xpath(xpath).send_keys(Keys.ENTER)
+    try:
+        element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, xpath)))
+        element.send_keys(Keys.ENTER)
+    except NoSuchElementException:
+        print('Can Not Find element with XPATH: ' + xpath)
 
 def down_element(driver, xpath: str) -> None:
     """
     Find an HTML element with <xpath> and inputs a down key.
     """
-    driver.find_element_by_xpath(xpath).send_keys(Keys.ARROW_DOWN)
+    #driver.find_element_by_xpath(xpath).send_keys(Keys.ARROW_DOWN)
+    try:
+        element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, xpath)))
+        element.send_keys(Keys.ARROW_DOWN)
+    except NoSuchElementException:
+        print('Can Not Find element with XPATH: ' + xpath)
 
-def wait() -> None:
+
+def select_element_index(driver, ID: str, text: str) -> None:
     """
-    Halts all processes by 3 seconds.
-     """
-    time.sleep(3)
+    Find an HTML element with <id> and select it with <index>
+    """
+    time_is_left = 20
+    while time_is_left > 0:
+        print('loop' + str(time_is_left))
+        try:
+            select = Select(driver.find_element_by_id('postingLocation'))
+            select.select_by_visible_text('City of Toronto')
+            time_is_left = 0
+        except NoSuchElementException:
+            pass
+        time.sleep(0.5)
+        time_is_left -= 0.5
 
 
 if __name__ == '__main__':
@@ -83,22 +124,18 @@ if __name__ == '__main__':
 
     # Clicks on Post Ad
     click_element(driver, "/html/body/div[3]/div[1]/div/header/div[3]/div/div[2]/div/a[2]")
-    wait()
 
     # Inputs Username and Password
     send_to_element(driver, '//*[@id="LoginEmailOrNickname"]', U1.username)
     send_to_element(driver, '//*[@id="login-password"]', U1.password)
     click_element(driver, '//*[@id="SignInButton"]')
-    wait()
 
     # Inputs Ad Title
     send_to_element(driver, '//*[@id="AdTitleForm"]', Ad1.title)
     click_element(driver, '/html/body/div[3]/div[2]/div/div/div/div[2]/div[1]/div[2]/div[1]/button')
-    wait()
 
     # Clicks Laptop
     click_element(driver, '/html/body/div[3]/div[2]/div/div/div/div[2]/div[1]/div[2]/div[2]/div[1]/ul/li[2]/button')
-    wait()
 
     # Inputs Brand, Screen_Size
     send_to_element(driver, '//*[@id="laptopbrand_s"]', Ad1.brand)
@@ -112,16 +149,12 @@ if __name__ == '__main__':
     for tag in Ad1.tags:
         send_to_element(driver, '//*[@id="pstad-tagsInput"]', tag)
         enter_element(driver, '//*[@id="pstad-tagsInput"]')
-    wait()
 
 
     # TODO: Inputs Photo
 
     # Inputs Location
-
-    select = Select(driver.find_element_by_id('postingLocation'))
-    wait()
-    select.select_by_index(0)
+    select_element_index(driver, 'postingLocation', 'City of Toronto')
 
     # Inputs Price
     send_to_element(driver, '//*[@id="PriceAmount"]', Ad1.price)
