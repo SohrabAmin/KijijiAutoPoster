@@ -151,8 +151,6 @@ if __name__ == '__main__':
         enter_element(driver, '//*[@id="pstad-tagsInput"]')
 
 
-    # TODO: Inputs Photo
-
     # Inputs Location
     select_element_index(driver, 'postingLocation', 'City of Toronto')
 
@@ -161,6 +159,12 @@ if __name__ == '__main__':
 
     # Inputs Phone Number
     send_to_element(driver, '//*[@id="PhoneNumber"]', U1.phone_num)
+
+    # Inputs Photos
+    path = '/Users/sohrab/Documents/Programming/Python/KijijiAutoPoster/pic1.jpeg'
+    upload = driver.find_element_by_class_name('imageUploadButtonWrapper')
+    upload = upload.find_element_by_tag_name('input')
+    upload.send_keys(path)
 
     # Posts Ad
     click_element(driver, '/html/body/div[5]/div[3]/div[1]/form/div/div[9]/button[1]')
