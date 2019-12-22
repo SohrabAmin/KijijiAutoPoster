@@ -6,7 +6,7 @@ KijijiAutoPoster is an automation tool using `selenium` with `Python` to make po
 ### Index
 1. [How to Install KijijiAutoPoster](#installing-kijijiautoposter)
 2. [License](#license)
-3. [How to Use KijijiAutoPoster)(#using-kijijiautoposter)
+3. [How to Use KijijiAutoPoster](#using-kijijiautoposter)
 
 
 ### Installing KijijiAutoPoster
