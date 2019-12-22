@@ -8,6 +8,7 @@ email = 'xakifij100@imail1.net'
 password = '_Mypassword123'
 phone_number = '647-416-9050'
 postal_code = 'L5L 1C6'
+location = 'Mississauga / Peel Region'
 
 title = "Microsoft Surface Pro 4"
 brand = 'O'
@@ -54,7 +55,7 @@ if __name__ == '__main__':
         enter_element(driver, '//*[@id="pstad-tagsInput"]')
 
     # Inputs Location
-    select_element_index(driver, 'postingLocation', 'City of Toronto')
+    select_element_index(driver, 'postingLocation', location)
 
     # Inputs Price
     send_to_element(driver, '//*[@id="PriceAmount"]', Ad1.price)
