@@ -10,7 +10,7 @@ KijijiAutoPoster is an automation tool using `selenium` with `Python` to make po
 
 
 ### Installing KijijiAutoPoster
-To install KijijiAutoPoster you will need to download [selenium](https://pypi.org/project/selenium/) and [Mozilla Firefox](https://www.mozilla.org/en-CA/firefox/new/) along with its [Gecko Driver](https://github.com/mozilla/geckodriver/releases.
+To install KijijiAutoPoster you will need to download [selenium](https://pypi.org/project/selenium/) and [Mozilla Firefox](https://www.mozilla.org/en-CA/firefox/new/) along with its [Gecko Driver](https://github.com/mozilla/geckodriver/releases).
 
 ### Using KijijiAutoPoster
 To use KijijiAutoPoster you will have to modify the following variables in `KijijiAutoPoster.py`:
