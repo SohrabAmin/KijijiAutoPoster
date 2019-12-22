@@ -2,10 +2,10 @@ Current Errors:
 
 [10/12/19]:
 - The wait() function is hardcoded and needs to use the actual selenium wait method. [resolved]
-- Can not post photos, need to find a way to choose photos from local computer.
+- Can not post photos, need to find a way to choose photos from local computer. [resolved]
 
 [10/13/19]:
 - Could not find built-in wait method for selecting drop down option, made it myself.
-- Can not post photos, need to find a way to choose photos from local computer.
+- Can not post photos, need to find a way to choose photos from local computer. [resolved]
 
 

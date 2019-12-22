@@ -1,127 +1,26 @@
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import time
+from KijijiAPI import LaptopAd, User, click_element, send_to_element, enter_element, select_element_index, upload_photos
+
 
 driver_path = '/Users/sohrab/env/bin/geckodriver'
 
+email = 'xakifij100@imail1.net'
+password = '_Mypassword123'
+phone_number = '647-416-9050'
+postal_code = 'L5L 1C6'
 
-class LaptopAd:
-    """
-    A Kijiji Laptop Advertisement.
-    """
-
-    def __init__(self, title: str, brand: str, screen_size: str, description: list, tags: list, price: str) -> None:
-        """
-        Instantiates a Laptop Advertisement.
-        """
-        self.title = title
-        self.brand = brand
-        self.screen_size = screen_size
-        self.description = description
-        self.tags = tags
-        self.price = price
-
-class User:
-    """
-    A Kijiji User.
-    """
-
-    def __init__(self, username: str, password: str, phone_num: str, postal_code: str) -> None:
-        """
-        Instantiates a Kijiji User
-        """
-        self.username = username
-        self.password = password
-        self.phone_num = phone_num
-        self.postal_code = postal_code
-
-
-def send_to_element(driver, xpath: str, string: str) -> None:
-    """
-    Finds an HTML element with <xpath> and inputs <string> to it.
-    """
-    try:
-        element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, xpath)))
-        element.send_keys(string)
-    except NoSuchElementException:
-        print('Can Not Find element with XPATH: ' + xpath)
-
-
-def click_element(driver, xpath: str) -> None:
-    """
-    Find an HTML element with <xpath> and clicks it.
-    """
-    try:
-        element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, xpath)))
-        element.click()
-    except NoSuchElementException:
-        print('Can Not Find element with XPATH: ' + xpath)
-
-
-def enter_element(driver, xpath: str) -> None:
-    """
-    Find an HTML element with <xpath> and inputs an enter key.
-    """
-    try:
-        element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, xpath)))
-        element.send_keys(Keys.ENTER)
-    except NoSuchElementException:
-        print('Can Not Find element with XPATH: ' + xpath)
-
-
-def down_element(driver, xpath: str) -> None:
-    """
-    Find an HTML element with <xpath> and inputs a down key.
-    """
-    try:
-        element = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, xpath)))
-        element.send_keys(Keys.ARROW_DOWN)
-    except NoSuchElementException:
-        print('Can Not Find element with XPATH: ' + xpath)
-
-
-def select_element_index(driver, ID: str, text: str) -> None:
-    """
-    Find an HTML element with <id> and select it with <index>
-    """
-    time_is_left = 20
-    while time_is_left > 0:
-        try:
-            select = Select(driver.find_element_by_id(ID))
-            select.select_by_visible_text(text)
-            time_is_left = 0
-        except NoSuchElementException:
-            pass
-        time.sleep(0.5)
-        time_is_left -= 0.5
-
-
-def upload_photos(driver, img_paths: list) -> None:
-    """
-    Find HTML element to upload photos and upload all the images from <img_path>
-    """
-    for path in img_paths:
-        image_upload = driver.find_element_by_class_name('imageUploadButtonWrapper')
-        image_upload = image_upload.find_element_by_tag_name('input')
-        image_upload.send_keys(path)
+title = "Microsoft Surface Pro 4"
+brand = 'O'
+screen_size = '14'
+description = "Like New Surface Pro tablet. Was never really used, except for keyboard. Hardly any battery cycle counts. Comes with Surface Charger and Surface Pen. Intel Core i5 6300U, RAM: 4GB, SSD 120GB"
+tags = ['Surface', 'Microsoft Surface', 'Surface Pro', 'Laptop', 'Windows']
+price = '749'
 
 
 if __name__ == '__main__':
-    U1 = User('xakifij100@imail1.net', '_Mypassword123', '647-416-9050', 'L5L 1C6')
-    Ad1 = LaptopAd("Microsoft Surface Pro 4", "Other", "14",
-                   ["Like New Surface Pro tablet. Was never really used, except for keyboard. Hardly any battery cycle counts. Comes with Surface Charger and Surface Pen.",
-                    " Intel Core i5 6300U,",
-                    " RAM: 4GB,", " SSD 120GB"], ['Surface', 'Microsoft Surface', 'Surface Pro', 'Laptop', 'Windows'],
-                   '749')
+    # Creates User and LaptopAd
+    U1 = User(email, password, phone_number, postal_code)
+    Ad1 = LaptopAd(title, brand, screen_size, description, tags, price)
 
     # Creates Driver and goes to Kijiji.ca
     driver = webdriver.Firefox(executable_path=driver_path)
@@ -147,8 +46,7 @@ if __name__ == '__main__':
     send_to_element(driver, '//*[@id="laptopscreensize_s"]', Ad1.screen_size)
 
     # Inputs Description
-    for string in Ad1.description:
-        send_to_element(driver, '//*[@id="pstad-descrptn"]', string)
+    send_to_element(driver, '//*[@id="pstad-descrptn"]', description)
 
     # Inputs Tags
     for tag in Ad1.tags:
@@ -168,18 +66,8 @@ if __name__ == '__main__':
     paths = ['/Users/sohrab/Documents/Programming/Python/KijijiAutoPoster/Pictures/pic1.jpg',
              '/Users/sohrab/Documents/Programming/Python/KijijiAutoPoster/Pictures/pic2.jpg']
     upload_photos(driver, paths)
-    time.sleep(5)
 
     # Posts Ad if Photos loaded
-    if len(driver.find_elements_by_class_name("thumbnail")) == 2:
-        click_element(driver, '/html/body/div[5]/div[3]/div[1]/form/div/div[9]/button[1]')
-
-
-
-
-
-
-
-
-
+    # if len(driver.find_elements_by_class_name("thumbnail")) == 2:
+    #     click_element(driver, '/html/body/div[5]/div[3]/div[1]/form/div/div[9]/button[1]')
 
