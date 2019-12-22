@@ -1,7 +1,7 @@
-# Kijiji Auto Poster
+# KijijiAutoPoster
 
 ### Description
-KijijiAutoPoster is an automation tool using `selenium` with `Python` to make posting on Kijiji easer. As of now, it is only able to repost Laptop Ads.
+KijijiAutoPoster is an automation tool using `selenium` with `Python` to make posting on Kijiji easer. As of now, it is only able to repost laptop ads in the Greater Toronto Area.
 
 ### Index
 1. [How to Install KijijiAutoPoster](#installing-kijijiautoposter)
@@ -17,8 +17,9 @@ To use KijijiAutoPoster you will have to modify the following variables in `Kiji
 - `driver_path`: The Gecko Driver location.
 - `email`: The Kijiji Email or Username.
 - `password`: The Kijiji Password.
-- `postal_code`: Ther Postal Code you want used for the ad.
-- `title`: The Ad Title.
+- `postal_code`: The Postal Code you want used for the ad.
+- `location`: The location of the ad.
+- `title`: The ad Title.
 - `brand`: The laptop brand.
 - `screen_size`: The laptop screen size.
 - `description`: The bio of the ad.
